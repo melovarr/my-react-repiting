@@ -1,0 +1,25 @@
+.orderForm {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.userName {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.btn {
+  border-radius: 4px;
+  border: 1px solid #959595;
+  background-color: rgb(98, 32, 131);
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 160px;
+  height: 36px;
+  margin: 5px calc((100% - 160px) / 2) auto;
+}

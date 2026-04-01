@@ -10,6 +10,9 @@ import { useState } from 'react';
 import ClickCounter from './ClickCounter/ClickCounter';
 import ClickCounter2 from './ClickCounter2/ClickCounter2';
 import ValuesUpdater from './ValuesUpdater/ValuesUpdater';
+import OrderForm from './OrderForm/OrderForm';
+import SearchForm from './SearchForm/SearchForm';
+import axios from 'axios';
 
 // let clicks = 0;
 // const handleClick = () => {
@@ -18,6 +21,16 @@ import ValuesUpdater from './ValuesUpdater/ValuesUpdater';
 // const handleClickSecondary = () => {
 //   console.log("I'am a button too");
 // };
+
+interface Article {
+  objectId: string;
+  title: string;
+  url: string;
+}
+
+interface ArticlesHttpResponse {
+  hits: Article[];
+}
 
 export default function App() {
   const [clicks, setClicks] = useState(0);
@@ -38,6 +51,19 @@ export default function App() {
     // clicks = clicks + 1;
     console.log(clicks);
   };
+
+  const handleOrder = (data: string) => {
+    console.log('Order received from:', data);
+  };
+
+  const handleSearch = async (topic: string) => {
+    console.log('Search topic:', topic);
+    const response = await axios.get<ArticlesHttpResponse>(
+      `https://hn.algolia.com/api/v1/search?query=${topic}`
+    );
+    console.log('Search results:', response.data);
+  };
+
   return (
     <>
       <Alert />
@@ -65,6 +91,12 @@ export default function App() {
       />
 
       <ValuesUpdater />
+
+      <h2>Place your order</h2>
+      <OrderForm onSubmit={handleOrder} />
+
+      <h2>Search Topics</h2>
+      <SearchForm onSubmit={handleSearch} />
 
       <h1>Products</h1>
 
