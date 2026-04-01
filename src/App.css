@@ -1,4 +1,4 @@
-.counter {
+/* .counter {
   font-size: 16px;
   padding: 5px 10px;
   border-radius: 5px;
@@ -28,7 +28,7 @@
   }
 
   .base {
-    width: 170px;
+    width: 190px;
     position: relative;
     z-index: 0;
   }
@@ -181,4 +181,4 @@
     right: 0;
     border-right-color: var(--border);
   }
-}
+} */

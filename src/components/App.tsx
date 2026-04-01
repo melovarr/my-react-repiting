@@ -7,6 +7,9 @@ import Product from './Product';
 import Button from './Button/Button';
 import UserMenu from './UserMenu/UserMenu';
 import { useState } from 'react';
+import ClickCounter from './ClickCounter/ClickCounter';
+import ClickCounter2 from './ClickCounter2/ClickCounter2';
+import ValuesUpdater from './ValuesUpdater/ValuesUpdater';
 
 // let clicks = 0;
 // const handleClick = () => {
@@ -18,6 +21,14 @@ import { useState } from 'react';
 
 export default function App() {
   const [clicks, setClicks] = useState(0);
+  const [count, setCount] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const handleClick2 = () => {
+    setCount(count + 1);
+  };
+  const toggleMessage = () => {
+    setIsOpen(!isOpen);
+  };
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     console.log('Clicked!', event);
     console.log('Target:', event.target); // сам <button>
@@ -40,6 +51,20 @@ export default function App() {
         text="Secondary Follow"
         onClick={handleClickSecondary}
       />
+
+      <ClickCounter />
+      <ClickCounter />
+
+      <ClickCounter2 value={count} onUpdate={handleClick2} />
+      <ClickCounter2 value={count} onUpdate={handleClick2} />
+
+      <Button
+        variant="primary"
+        text={isOpen ? 'Hide Message' : 'Show Message'}
+        onClick={toggleMessage}
+      />
+
+      <ValuesUpdater />
 
       <h1>Products</h1>
 

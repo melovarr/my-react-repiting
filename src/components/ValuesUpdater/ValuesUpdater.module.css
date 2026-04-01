@@ -1,0 +1,25 @@
+.updater {
+  border-radius: 4px;
+  border: 1px solid #959595;
+  background-color: rgb(98, 32, 131);
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 160px;
+  height: 36px;
+  /* margin: 20px calc((100% - 160px) / 2) auto; */
+}
+
+.wrapper {
+  width: 320px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px auto;
+  padding: 0 60px;
+}
+.value {
+  font-size: 18px;
+  color: #fff;
+  margin: 0 10px;
+}
