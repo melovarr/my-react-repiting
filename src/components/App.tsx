@@ -13,6 +13,8 @@ import ValuesUpdater from './ValuesUpdater/ValuesUpdater';
 import OrderForm from './OrderForm/OrderForm';
 import SearchForm from './SearchForm/SearchForm';
 import axios from 'axios';
+import ArticleList from './ArticleList/ArticleList';
+import { Audio } from 'react-loader-spinner';
 
 // let clicks = 0;
 // const handleClick = () => {
@@ -36,6 +38,9 @@ export default function App() {
   const [clicks, setClicks] = useState(0);
   const [count, setCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleClick2 = () => {
     setCount(count + 1);
   };
@@ -57,10 +62,13 @@ export default function App() {
   };
 
   const handleSearch = async (topic: string) => {
-    console.log('Search topic:', topic);
+    // console.log('Search topic:', topic);
+    setIsLoading(true);
     const response = await axios.get<ArticlesHttpResponse>(
       `https://hn.algolia.com/api/v1/search?query=${topic}`
     );
+    setIsLoading(false);
+    setArticles(response.data.hits);
     console.log('Search results:', response.data);
   };
 
@@ -97,6 +105,16 @@ export default function App() {
 
       <h2>Search Topics</h2>
       <SearchForm onSubmit={handleSearch} />
+      {isLoading && (
+        <Audio
+          height={80}
+          width={80}
+          color="green"
+          ariaLabel="audio-loading"
+          wrapperStyle={{}}
+        />
+      )}
+      {articles.length > 0 && <ArticleList items={articles} />}
 
       <h1>Products</h1>
 
