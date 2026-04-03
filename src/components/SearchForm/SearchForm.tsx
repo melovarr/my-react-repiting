@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import styles from './SearchForm.module.css';
 
 interface SearchFormProps {
@@ -5,6 +6,7 @@ interface SearchFormProps {
 }
 
 export default function SearchForm({ onSubmit }: SearchFormProps) {
+  const topicId = useId();
   const handleSubmit = (formData: FormData) => {
     const topic = formData.get('topic') as string;
 
@@ -16,9 +18,11 @@ export default function SearchForm({ onSubmit }: SearchFormProps) {
   };
   return (
     <form action={handleSubmit} className={styles.searchForm}>
+      <label htmlFor={topicId}>Enter search topic:</label>
       <input
         type="text"
         name="topic"
+        id={topicId}
         placeholder="Search topic..."
         className={styles.topic}
       />

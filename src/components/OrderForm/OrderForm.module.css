@@ -23,3 +23,7 @@
   height: 36px;
   margin: 5px calc((100% - 160px) / 2) auto;
 }
+fieldset {
+  display: flex;
+  justify-content: space-between;
+}

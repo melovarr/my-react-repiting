@@ -12,9 +12,9 @@ import ClickCounter2 from './ClickCounter2/ClickCounter2';
 import ValuesUpdater from './ValuesUpdater/ValuesUpdater';
 import OrderForm from './OrderForm/OrderForm';
 import SearchForm from './SearchForm/SearchForm';
-import axios from 'axios';
 import ArticleList from './ArticleList/ArticleList';
 import { Audio } from 'react-loader-spinner';
+import { fetchArticles } from '../services/articleService';
 
 // let clicks = 0;
 // const handleClick = () => {
@@ -30,16 +30,13 @@ interface Article {
   url: string;
 }
 
-interface ArticlesHttpResponse {
-  hits: Article[];
-}
-
 export default function App() {
   const [clicks, setClicks] = useState(0);
   const [count, setCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const handleClick2 = () => {
     setCount(count + 1);
@@ -63,13 +60,18 @@ export default function App() {
 
   const handleSearch = async (topic: string) => {
     // console.log('Search topic:', topic);
-    setIsLoading(true);
-    const response = await axios.get<ArticlesHttpResponse>(
-      `https://hn.algolia.com/api/v1/search?query=${topic}`
-    );
-    setIsLoading(false);
-    setArticles(response.data.hits);
-    console.log('Search results:', response.data);
+    try {
+      setIsLoading(true);
+      setIsError(false);
+      const data = await fetchArticles(topic);
+
+      setArticles(data);
+    } catch {
+      setIsError(true);
+    } finally {
+      setIsLoading(false);
+    }
+    //   console.log('Search results:', response.data);
   };
 
   return (
@@ -114,6 +116,7 @@ export default function App() {
           wrapperStyle={{}}
         />
       )}
+      {isError && <p>Whoops,something went wrong! Please, try again!</p>}
       {articles.length > 0 && <ArticleList items={articles} />}
 
       <h1>Products</h1>
