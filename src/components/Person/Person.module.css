@@ -1,0 +1,20 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* height: 100vh; */
+  border: 1px solid #959595;
+  border-radius: 8px;
+  width: 300px;
+  margin: 8px auto;
+  padding: 16px;
+}
+
+.person {
+  text-align: left;
+  width: 298px;
+  /* border: 1px solid #959595; */
+  /* padding: 8px; */
+  /* border-radius: 8px; */
+}

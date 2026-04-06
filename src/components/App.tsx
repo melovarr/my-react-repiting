@@ -15,6 +15,7 @@ import SearchForm from './SearchForm/SearchForm';
 import ArticleList from './ArticleList/ArticleList';
 import { Audio } from 'react-loader-spinner';
 import { fetchArticles } from '../services/articleService';
+import Person from './Person/Person';
 
 // let clicks = 0;
 // const handleClick = () => {
@@ -104,6 +105,9 @@ export default function App() {
 
       <h2>Place your order</h2>
       <OrderForm onSubmit={handleOrder} />
+
+      <h2>Person Information</h2>
+      <Person />
 
       <h2>Search Topics</h2>
       <SearchForm onSubmit={handleSearch} />
