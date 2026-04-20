@@ -7,16 +7,22 @@ export default function Person() {
   const [person, setPerson] = useState(null);
 
   useEffect(() => {
-    console.log('Effect ran!');
-
-    axios
-      .get(`https://swapi.dev/api/people/${count}/`)
-      .then(response => {
-        setPerson(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching person data:', error);
-      });
+    // console.log('Effect ran!');
+    async function fetchCharacter() {
+      const response = await axios.get(
+        `https://swapi.dev/api/people/${count}/`
+      );
+      setPerson(response.data);
+    }
+    fetchCharacter();
+    // axios
+    //   .get(`https://swapi.dev/api/people/${count}/`)
+    //   .then(response => {
+    //     setPerson(response.data);
+    //   })
+    //   .catch(error => {
+    //     console.error('Error fetching person data:', error);
+    //   });
   }, [count]);
   console.log('App rendered!');
 

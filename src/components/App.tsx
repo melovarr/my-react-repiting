@@ -16,6 +16,9 @@ import ArticleList from './ArticleList/ArticleList';
 import { Audio } from 'react-loader-spinner';
 import { fetchArticles } from '../services/articleService';
 import Person from './Person/Person';
+import Timer from './Timer/Timer';
+import Modal from './Modal/Modal';
+import Clicker from './Clicker/Clicker';
 
 // let clicks = 0;
 // const handleClick = () => {
@@ -38,6 +41,7 @@ export default function App() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClick2 = () => {
     setCount(count + 1);
@@ -75,12 +79,30 @@ export default function App() {
     //   console.log('Search results:', response.data);
   };
 
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
     <>
+      <div>
+        <h2>Main content of the page.</h2>
+        <button onClick={openModal}>Open Modal</button>
+        {isModalOpen && (
+          <Modal onClose={closeModal}>
+            <h2>Custom Modal Content</h2>
+            <p>This is a reusable modal with dynamic content.</p>
+          </Modal>
+        )}
+      </div>
       <Alert />
       <Alert type="success" />
       <Alert type="error" />
       <UserMenu name="Serhii" />
+
+      <button onClick={() => setIsOpen(!isOpen)}>
+        {isOpen ? 'Hide timer' : 'Show timer'}
+      </button>
+      {isOpen && <Timer />}
 
       <Button variant="primary" text="Primary Login" onClick={handleClick} />
       <Button
@@ -88,6 +110,8 @@ export default function App() {
         text="Secondary Follow"
         onClick={handleClickSecondary}
       />
+
+      <Clicker />
 
       <ClickCounter />
       <ClickCounter />
