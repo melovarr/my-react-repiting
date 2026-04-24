@@ -5,14 +5,14 @@ interface ArticleHttpResponse {
   hits: Article[];
   nbPages: number;
 }
-const API_URL = import.meta.env.VITE_API_URL;
+// const API_URL = import.meta.env.VITE_API_URL;
 
-export const fetchArticles = async (
-  topic: string,
-  page: number
-): Promise<Article[]> => {
-  const response = await axios.get<ArticleHttpResponse>(API_URL, {
-    params: { query: topic, page },
-  });
-  return response.data.hits;
+export const fetchArticles = async (topic: string, page: number) => {
+  const response = await axios.get<ArticleHttpResponse>(
+    'https://hn.algolia.com/api/v1/search',
+    {
+      params: { query: topic, page },
+    }
+  );
+  return response.data;
 };

@@ -20,6 +20,7 @@ import Timer from './Timer/Timer';
 import Modal from './Modal/Modal';
 import Clicker from './Clicker/Clicker';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import Pagination from './Pagination/Pagination';
 
 // let clicks = 0;
 // const handleClick = () => {
@@ -45,11 +46,11 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [topic, setTopic] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, isError, isSuccess } = useQuery({
     queryKey: ['articles', topic, currentPage],
     queryFn: () => fetchArticles(topic, currentPage),
-    placeholderData: keepPreviousData,
     enabled: topic !== '',
+    placeholderData: keepPreviousData,
   });
   const totalPages = data?.nbPages ?? 0;
 
@@ -101,21 +102,14 @@ export default function App() {
         <h2>Search Topics</h2>
         <button onClick={openModal}>Open Modal</button>
         {/* <SearchForm onSubmit={handleSearch} /> */}
-        <p>
-          Current page {currentPage} | Total pages {totalPages}
-        </p>
-        <button
-          onClick={() => setCurrentPage(Math.max(currentPage - 1, 1))}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <button
-          onClick={() => setCurrentPage(currentPage + 1)}
-          disabled={currentPage >= totalPages}
-        >
-          Next
-        </button>
+
+        {isSuccess && totalPages > 1 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
+        )}
         {isLoading && (
           <Audio
             height={80}
@@ -126,8 +120,7 @@ export default function App() {
           />
         )}
         {isError && <p>Whoops,something went wrong! Please, try again!</p>}
-        {data && data.length > 0 && <ArticleList items={data} />}
-        {/* {articles.length > 0 && <ArticleList items={articles} />} */}
+        {data && data.hits.length > 0 && <ArticleList items={data.hits} />}
         {isModalOpen && (
           <Modal onClose={closeModal}>
             <SearchForm onSubmit={handleSearch} />
