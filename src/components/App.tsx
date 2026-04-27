@@ -21,6 +21,7 @@ import Modal from './Modal/Modal';
 import Clicker from './Clicker/Clicker';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import Pagination from './Pagination/Pagination';
+import FormikOrderForm from './FormikOrderForm/FormikOrderForm';
 
 // let clicks = 0;
 // const handleClick = () => {
@@ -99,6 +100,7 @@ export default function App() {
     <>
       <div>
         <h2>Main content of the page.</h2>
+        <FormikOrderForm />
         <h2>Search Topics</h2>
         <button onClick={openModal}>Open Modal</button>
         {/* <SearchForm onSubmit={handleSearch} /> */}
